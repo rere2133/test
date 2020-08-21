@@ -16,12 +16,15 @@
     $a = 10;
     echo $a;
     echo '<br>';
-    echo empty($b) ? 'empty' :'not empty'.'<br>';
-    echo !empty($b).'<br>';
+    echo empty($b) ? 'empty' : 'not empty' . '<br>';
+    echo !empty($b) . '<br>';
     echo '$a<br>';
     echo "\$a<br>";
     echo "$a<br>";
-
+    $name = "Anna";
+    echo "Hello , {$name} 1234 <br>";
+    # $c = "hi";
+    echo $c ?? 'peter';
     ?>
 </body>
 
