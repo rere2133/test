@@ -24,6 +24,40 @@
             </tr>
         <?php endfor ?>
     </table>
+    <table>
+        <?php for ($i = 0; $i <= 255; $i += 17) : ?>
+            <tr>
+                <?php for ($k = 0; $k <= 255; $k += 17) : ?>
+                    <td style="background-color: #<?= sprintf("%'.06X", $i * 65536 + $k) ?>"></td>
+                <?php endfor ?>
+            </tr>
+        <?php endfor ?>
+    </table>
+    <table class="c-num">
+        <?php for ($i = 0; $i <= 255; $i += 17) : ?>
+            <tr>
+                <?php for ($k = 0; $k <= 255; $k += 17) : ?>
+                    <td style="background-color: #<?= sprintf("%'.06X", $i * 256 + $k) ?>"></td>
+                <?php endfor ?>
+            </tr>
+        <?php endfor ?>
+    </table>
+    <script>
+        // color picker
+        const colorNumber = document.querySelector('.c-num');
+        colorNumber.addEventListener('click', function(e) {
+            const t = e.target;
+            console.log(t.style.backgroundColor);
+        });
+        // const table = document.querySelectorAll('table');
+        // for(a)
+        // table.addEventListener('click', function(e) {
+        //     const t = e.target;
+        //     console.log(t.style.backgroundColor);
+        // });
+    </script>
+
+
 </body>
 
 

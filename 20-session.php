@@ -1,5 +1,5 @@
 <?php
-setcookie('mycookie', 100);
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,12 +7,18 @@ setcookie('mycookie', 100);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cookie</title>
+    <title>Document</title>
 </head>
 
 <body>
     <?php
-    echo $_COOKIE['mycookie'];
+    if (isset($_SESSION['myvar'])) {
+        $_SESSION['myvar']++;
+    } else {
+        $_SESSION['myvar'] = 1;
+    }
+
+    echo $_SESSION['myvar'];
     ?>
 </body>
 
