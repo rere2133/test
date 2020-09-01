@@ -15,6 +15,12 @@ $output = [
 // email_pattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 // mobile_pattern = /^09\d{2}-?\d{3}-?\d{3}$/;
 
+if (empty($_POST['sid'])) {
+    $output['code'] = 405;
+    $output['error'] = '沒有 sid';
+    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    exit;
+}
 
 if (mb_strlen($_POST['name']) < 2) {
     $output['code'] = 410;
@@ -29,7 +35,13 @@ if (!preg_match('/^09\d{2}-?\d{3}-?\d{3}$/', $_POST['mobile'])) {
     exit;
 }
 
-$sql = "INSERT INTO `address_book`( `name`, `mobile`, `email`, `birthday`, `address`, `created_at`) VALUES(?,?,?,?,?,NOW())";
+$sql = "UPDATE `address_book` SET 
+`name`=?,
+`mobile`=?,
+`email`=?,
+`birthday`=?,
+`address`=?
+WHERE `sid`=?";
 //MySQL語法一律用雙引號
 
 $stmt = $pdo->prepare($sql);

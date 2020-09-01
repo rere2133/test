@@ -1,9 +1,21 @@
 <?php
-$page_title = '新增資料';
-$page_name = 'data-insert';
+$page_title = '編輯資料';
+$page_name = 'data-edit';
 require __DIR__ . '/parts/__connect_db.php';
 require __DIR__ . '/parts/__admin_required.php';
+$sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
+if (empty($sid)) {
+    header("Location:data.list.php");
+    exit;
+}
+$sql = "SELECT * FROM address_book WHERE sid = $sid";
+$row = $pdo->query($sql)->fetch();
+if (empty($row)) {
+    header('Location: data.list.php');
+    exit;
+}
 ?>
+
 
 <?php include __DIR__ . '/parts/__html_head.php'; ?>
 <style>
@@ -24,30 +36,31 @@ require __DIR__ . '/parts/__admin_required.php';
             </div>
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">新增資料</h5>
+                    <h5 class="card-title">編輯資料</h5>
                     <form name="form1" onsubmit="return checkForm();" novalidate>
+                        <input type="hidden" name="sid" value="<?= $row['sid'] ?>">
                         <div class="form-group">
                             <label for="name">** Name</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                            <input type="text" class="form-control" id="name" name="name" required value="<?= htmlentities($row['name']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
                             <label for="email">** Email</label>
-                            <input type="email" class="form-control" id="email" name="email">
+                            <input type="email" class="form-control" id="email" name="email" value="<?= htmlentities($row['email']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
                             <label for="mobile">** Mobile</label>
-                            <input type="tel" class="form-control" id="mobile" name="mobile" pattern="09\d{2}-?\d{3}-?\d{3}">
+                            <input type="tel" class="form-control" id="mobile" name="mobile" value="<?= htmlentities($row['mobile']) ?>" pattern="09\d{2}-?\d{3}-?\d{3}">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
                             <label for="birthday">Birthday</label>
-                            <input type="date" class="form-control" id="birthday" name="birthday">
+                            <input type="date" class="form-control" id="birthday" name="birthday" value="<?= htmlentities($row['birthday']) ?>">
                         </div>
                         <div class="form-group">
                             <label for="address">Address</label>
-                            <textarea class="form-control" name="address" id="address" cols="20" rows="2"></textarea>
+                            <textarea class="form-control" name="address" id="address" cols="20" rows="2" value="<?= htmlentities($row['address']) ?>"></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -101,7 +114,7 @@ require __DIR__ . '/parts/__admin_required.php';
             const fd = new FormData(document.form1);
             //FormData是一個沒有外觀的form
 
-            fetch('data-insert-api.php', {
+            fetch('data-edit-api.php', {
                     method: 'POST',
                     body: fd
                 })
@@ -111,9 +124,7 @@ require __DIR__ . '/parts/__admin_required.php';
                     if (obj.success) {
                         infobar.innerHTML = '新增成功';
                         infobar.className = "alert alert-success";
-                        // if(infobar.classList.contains('alert-danger')){
-                        //     infobar.classList.replace('alert-danger', 'alert-success')
-                        // }
+
                         setTimeout(() => {
                             location.href = 'data.list.php';
                         }, 3000)

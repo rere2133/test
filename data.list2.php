@@ -1,6 +1,6 @@
 <?php
 $page_title = '資料列表';
-$page_name = 'data-list';
+$page_name = 'data-list2';
 require __DIR__ . '/parts/__connect_db.php';
 ?>
 
@@ -11,7 +11,7 @@ require __DIR__ . '/parts/__connect_db.php';
     <div class="row">
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item">
+                <!-- <li class="page-item">
                     <a class="page-link" href="?page=">
                         <i class="fas fa-arrow-circle-left"></i>
                     </a>
@@ -25,7 +25,7 @@ require __DIR__ . '/parts/__connect_db.php';
                     <a class="page-link" href="?page=">
                         <i class="fas fa-arrow-circle-right"></i>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </nav>
         <table class="table table-dark">
@@ -38,7 +38,8 @@ require __DIR__ . '/parts/__connect_db.php';
                     <th scope="col">Email</th>
                     <th scope="col">Birth</th>
                     <th scope="col">Add</th>
-                    <th scope="col"><i class="fas fa-edit"></i></th>
+                    <th scope="col">
+                        <i class="fas fa-edit"></i></th>
                 </tr>
             </thead>
             <tbody>
@@ -52,9 +53,29 @@ require __DIR__ . '/parts/__connect_db.php';
 <?php include __DIR__ . '/parts/__script.php'; ?>
 <script>
     const tbody = document.querySelector('tbody');
+
+    let pageData; //?要幹嘛
+
+    const hashHandler = function() {
+        let h = parseInt(location.hash.slice(1)) || 1;
+        //parseInt 將輸入的字串轉成數字
+        if (h < 1) h = 1;
+        console.log(`h:${h}`);
+        getData(h);
+    }
+    window.addEventListener('hashchange', hashHandler);
+    hashHandler(); //頁面一進來就直接呼叫
+
+    const pageItemTpl = (o) => {
+        return `
+        <li class="page-item ${o.active}">
+            <a class="page-link" href="#${o.page}">${o.page}</a>
+        </li>`;
+        //href為頁面內的連結
+    };
     const tableRowTpl = (o) => {
         return `
-        tr>
+        <tr>
             <td>${o.sid}</td>
             <td>${o.name}</td>
             <td>${o.email}</td>
@@ -63,17 +84,36 @@ require __DIR__ . '/parts/__connect_db.php';
             <td>${o.address}</td>
         </tr>
         `;
-    }
+    };
 
-    fetch('data-list2-api.php')
-        .then(r => r.json())
-        .then(obj => {
-            console.log(obj);
-            let str = '';
-            for (let i of obj.rows) {
-                str += tableRowTpl(i);
-            }
-            tbody.innerHTML = str;
-        });
+    function getData(page = 1) {
+        // fetch('data.list2-api.php')
+        fetch('data.list2-api.php?page=' + page)
+            .then(r => r.json())
+            .then(obj => {
+                console.log(obj);
+                pageData = obj;
+                let str = '';
+                for (let i of obj.rows) {
+                    str += tableRowTpl(i);
+                }
+                tbody.innerHTML = str;
+
+                str = '';
+                for (let i = obj.page - 3; i < obj.page + 3; i++) {
+                    if (i < 1) continue;
+                    if (i > obj.totalPages) continue;
+                    const o = {
+                        page: i,
+                        active: ''
+                    }
+                    if (obj.page === i) {
+                        o.active = 'active';
+                    }
+                    str += pageItemTpl(o);
+                }
+                document.querySelector('.pagination').innerHTML = str;
+            });
+    }
 </script>
 <?php include __DIR__ . '/parts/__html_footer.php'; ?>

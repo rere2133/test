@@ -26,7 +26,7 @@ if ($totalRows > 0) {
     if ($page > $totalPages) $page = $totalPages;
     $output['page'] = $page;
 
-    $sql = sprintf("SELECT * FROM `address_book` ORDER BY `address_book`.`sid` DESC LIMIT %s,%s", ($page - 1) * $perPageData, $perPageData);
+    $sql = sprintf("SELECT * FROM `address_book` ORDER BY `address_book`.`sid` ASC LIMIT %s,%s", ($page - 1) * $perPageData, $perPageData);
     $stmt = $pdo->query($sql);
     $output['rows'] = $stmt->fetchAll();
 }

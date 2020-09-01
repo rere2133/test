@@ -11,7 +11,7 @@
     <?php
     define("MY_CONST", 123);
     echo MY_CONST;
-
+    //定義時字串需用雙引號，呼叫時不用
     ?>
 </body>
 

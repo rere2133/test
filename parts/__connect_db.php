@@ -18,3 +18,7 @@ $pdo_option = [
 $pdo = new PDO($dsn, $db_user, $db_pass, $pdo_option);
 
 define('WEB_ROOT', '/test');
+
+if (!isset($_SESSION)) {
+    session_start();
+}

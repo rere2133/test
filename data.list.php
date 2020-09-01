@@ -1,6 +1,6 @@
 <?php
 $page_title = '資料列表';
-$page_name = 'data-list';
+$page_name = 'data-list1';
 require __DIR__ . '/parts/__connect_db.php';
 
 // $perPageData = 5; //每頁有幾筆資料
@@ -83,7 +83,7 @@ if ($totalRows > 0) {
                     <td><?= $r['email'] ?></td>
                     <td><?= $r['birthday'] ?></td>
                     <td><?= $r['address'] ?></td>
-                    <td><a href="#"><i class="fas fa-edit"></i></a></td>
+                    <td><a href="data-edit.php?sid=<?= $r['sid'] ?>"><i class="fas fa-edit"></i></a></td>
                 </tr>
             <?php endforeach; ?>
 
