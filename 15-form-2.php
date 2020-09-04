@@ -9,6 +9,10 @@
 </head>
 
 <body>
+    <!-- 1.表單送出input要有name
+         2. form預設送出方法是get
+         3. 用get方法送出只會送header
+         4. 用post方法送出會送header,body且不會把資料顯現在網址列 -->
     <div class="alert alert-primary" role="alert">
         <pre><?php
                 print_r($_POST);
@@ -34,6 +38,8 @@
             </form>
         </div>
     </div>
+
+
 
 
 

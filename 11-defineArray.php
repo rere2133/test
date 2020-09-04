@@ -10,6 +10,8 @@
 <body>
     <pre>
         <?php
+        //pre 用來呈現程式碼用的標籤
+        //php 關聯式陣列
         $ar1 = array(1, 3, 5, 7);
         $ar2 = [222, [1, 3, 5, 7, 9]];
         $ar3 = [
@@ -18,10 +20,12 @@
             'date' => [5, 8, 9]
         ];
         print_r($ar1);
+        //print_r 印出陣列的意思
         print_r($ar2);
         print_r($ar3);
 
         var_dump($ar1);
+        //var_dump 印出陣列及類型
         var_dump($ar2);
         var_dump($ar3);
 

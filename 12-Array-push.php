@@ -21,6 +21,9 @@
 
         // $ar4 = $ar3; #複製陣列，新陣列與舊陣列獨立，互不影響。copy值，而非copy參照。
         $ar3['date'][] = 87;
+        $ar3['weight'][] = 60;
+        //相當於js的array push;
+
         $ar4 = &$ar3; #copy參照
         $ar3['date'][1] = 777;
         foreach ($ar4 as $k => $v) {
@@ -30,6 +33,19 @@
                 printf("%s => %s<br>", $k, $v);
             }
         }
+
+
+        //只拿value值
+        // foreach ($ar3 as $v) {
+        //     printf("%s<br>", $v);
+        // }
+
+
+        //只拿key值
+        // foreach ($ar3 as $k => $v) {
+        //     printf("%s<br>", $k);
+        // }
+
 
         ?>
     </div>

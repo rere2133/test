@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 $account = [
     'Ming' => [
         'pw' => 'bbb234',
@@ -11,16 +10,12 @@ $account = [
         'nickname' => '大衛'
     ],
 ];
-// 送出的表單有account的欄位
 if (isset($_POST['account'])) {
-    // 輸入的帳號（$account的key)如果不是空值,且有對應到該陣列
     if (!empty($account[$_POST['account']])) {
         $a = $account[$_POST['account']];
-        // 輸入的密碼與對應陣列密碼相同
         if ($_POST['password'] == $a['pw']) {
             $_SESSION['user'] = [
-                //以下為要放到session的資料
-                'account' => $_POST['account'],
+                'account' => $a,
                 'nickname' => $a['nickname']
             ];
         }
@@ -39,43 +34,36 @@ if (isset($_POST['account'])) {
 </head>
 
 <body>
-
     <div class="container">
         <?php if (isset($_SESSION['user'])) : ?>
             <div class="row">
-                <div class="col">
-                    <div class="alert alert-info" role="alert">
-                        <?= $_SESSION['user']['nickname'] ?>
-                        ,hi!<br>
+                <div class="alert alert-primary" role="alert">
+                    <?= $_SESSION['user']['nickname'] ?>, Welcome!
+                    <a href="24-logout-p.php">登出</a>
 
-                        <a href="./24-logout.php">登出</a>
-                    </div>
                 </div>
+
             </div>
         <?php else : ?>
             <div class="row">
-                <div class="col-6">
-                    <form method="post">
-                        <div class="form-group">
-                            <label for="account">Email address</label>
-                            <input type="text" class="form-control" id="account" name="account">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password">
-                        </div>
-                        <div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="checkbox" value="checked">
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
+                <form class="col-6" method="post">
+                    <div class="form-group">
+                        <label for="account">Account</label>
+                        <input type="text" class="form-control" id="account" name="account">
 
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
         <?php endif; ?>
     </div>
+
+
 
 
 

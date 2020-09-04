@@ -13,6 +13,7 @@
     ?>
 
         <img src="./img/01.jpg" alt="">
+        <!-- php裡面嵌入html，這裡的html相當於php的echo -->
 
     <?php } else { ?>
 

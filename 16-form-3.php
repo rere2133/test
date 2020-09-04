@@ -9,6 +9,7 @@
 </head>
 
 <body>
+
     <div class="alert alert-primary" role="alert">
         <pre><?php
                 print_r($_POST);
@@ -71,6 +72,7 @@
                 console.log(el.value, el.checked);
             })
         }
+        //用js取出checkbox的值，可測試用
     </script>
 </body>
 

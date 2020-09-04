@@ -1,5 +1,7 @@
 <?php
-session_start();
+session_start()
+//session啟動，每個頁面要用session，都要呼叫這個function
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
